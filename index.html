@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FCM Account Valuator</title>
+  <meta name="description" content="Analisis squad dan estimasi harga akun FC Mobile.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-orb orb1"></div><div class="bg-orb orb2"></div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">⚡</div>
+      <div><b>FCM</b> <span>ACCOUNT VALUATOR</span><small>Analisis akun • Estimasi harga</small></div>
+    </div>
+    <div class="top-actions">
+      <button id="themeBtn" class="ghost">☾ Dark Mode</button>
+      <button class="ghost" onclick="scrollToSection('panduan')">Panduan</button>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <button class="nav active">⌂ <span>Beranda</span></button>
+    <button class="nav" onclick="scrollToSection('analisis')">⌕ <span>Analisis Akun</span></button>
+    <button class="nav" onclick="scrollToSection('hasil')">◷ <span>Hasil</span></button>
+    <button class="nav" onclick="scrollToSection('panduan')">▣ <span>Panduan</span></button>
+  </aside>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">FC MOBILE ACCOUNT ANALYZER</span>
+        <h1>Hitung nilai akunmu<br><em>lebih mudah.</em></h1>
+        <p>Upload screenshot akun, masukkan data yang terlihat, lalu dapatkan analisis squad dan kisaran nilai akun.</p>
+      </div>
+      <div class="hero-badge">⚽ <b>ESTIMATOR</b><br><small>Market estimate</small></div>
+    </section>
+
+    <section id="analisis" class="grid-main">
+      <div class="card upload-card">
+        <div class="card-head"><div><h2>📸 Upload Screenshot</h2><p>Gunakan screenshot yang jelas dan tidak terpotong.</p></div></div>
+        <label id="dropzone" class="dropzone">
+          <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp">
+          <div id="uploadIcon" class="upload-icon">↥</div>
+          <strong id="uploadTitle">Pilih foto akun</strong>
+          <span id="uploadSub">atau drag & drop gambar di sini</span>
+          <small>JPG, PNG, WEBP • maksimal 8 MB</small>
+        </label>
+        <div id="previewWrap" class="preview-wrap hidden">
+          <img id="preview" alt="Preview screenshot akun">
+          <button id="removeImg" class="remove">× Hapus</button>
+        </div>
+        <div class="tip">💡 Untuk hasil lebih lengkap, upload screenshot <b>OVR/squad</b>, profil, dan resource jika tersedia.</div>
+      </div>
+
+      <div class="card form-card">
+        <div class="card-head"><div><h2>⚙️ Data Akun</h2><p>Isi data yang terlihat pada screenshot.</p></div></div>
+        <div class="form-grid">
+          <label>OVR Tim<input id="ovr" type="number" min="1" max="200" placeholder="Contoh: 122"></label>
+          <label>Level Akun<input id="level" type="number" min="1" max="100" placeholder="Contoh: 70"></label>
+          <label>Rank H2H<select id="h2h"><option value="0">Tidak diketahui</option><option value="1">World Class</option><option value="2">Legendary</option><option value="3">FC Champion</option></select></label>
+          <label>Rank VSA<select id="vsa"><option value="0">Tidak diketahui</option><option value="1">World Class</option><option value="2">Legendary</option><option value="3">FC Champion</option></select></label>
+          <label>Coins<input id="coins" type="number" min="0" placeholder="Contoh: 12500000"></label>
+          <label>Gems<input id="gems" type="number" min="0" placeholder="Contoh: 1250"></label>
+          <label>Ikonik/Legend<input id="iconic" type="number" min="0" placeholder="Jumlah"></label>
+          <label>Pemain Event<input id="eventPlayers" type="number" min="0" placeholder="Jumlah"></label>
+        </div>
+        <div class="position-title">Kondisi squad</div>
+        <div class="position-grid">
+          <label>GK<select id="gk"><option value="1">Bagus</option><option value="0">Perlu upgrade</option></select></label>
+          <label>DEF<select id="def"><option value="1">Bagus</option><option value="0">Perlu upgrade</option></select></label>
+          <label>MID<select id="mid"><option value="1">Bagus</option><option value="0">Perlu upgrade</option></select></label>
+          <label>ATT<select id="att"><option value="1">Bagus</option><option value="0">Perlu upgrade</option></select></label>
+        </div>
+        <button id="analyzeBtn" class="primary">⚡ ANALISIS AKUN</button>
+        <p class="disclaimer">Estimasi bersifat indikatif. Harga pasar dapat berubah dan bukan jaminan harga jual.</p>
+      </div>
+    </section>
+
+    <section id="hasil" class="results hidden">
+      <div class="result-head">
+        <div><span class="eyebrow">ANALYSIS RESULT</span><h2>Hasil Analisis Akun</h2></div>
+        <button id="resetBtn" class="ghost">↻ Analisis ulang</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><small>OVR TIM</small><b id="rOvr">—</b><span id="ovrLabel">—</span></div>
+        <div class="stat"><small>LEVEL</small><b id="rLevel">—</b><span>Account level</span></div>
+        <div class="stat"><small>RANK H2H</small><b id="rH2h">—</b><span>Mode</span></div>
+        <div class="stat"><small>RANK VSA</small><b id="rVsa">—</b><span>Mode</span></div>
+      </div>
+      <div class="result-grid">
+        <div class="card">
+          <div class="price-card"><small>ESTIMASI NILAI AKUN</small><strong id="price">Rp0</strong><span id="priceRange">—</span><div class="confidence"><span>Keyakinan estimasi</span><b id="confidence">—</b><div><i id="confidenceBar"></i></div></div></div>
+          <div class="section-block"><h3>📊 Ringkasan</h3><p id="summary">—</p></div>
+          <div class="section-block"><h3>⭐ Pemain / aset unggulan</h3><div id="assets" class="chips"></div></div>
+        </div>
+        <div class="card">
+          <div class="good"><h3>✅ Kelebihan</h3><ul id="pros"></ul></div>
+          <div class="bad"><h3>⚠️ Kekurangan</h3><ul id="cons"></ul></div>
+          <div class="recommend"><b>🎯 Saran upgrade</b><p id="recommendation">—</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="panduan" class="guide">
+      <div class="card">
+        <span class="eyebrow">PANDUAN</span><h2>Bagaimana estimator bekerja?</h2>
+        <div class="guide-grid">
+          <div><b>01 — Upload</b><p>Tambahkan screenshot akun yang jelas.</p></div>
+          <div><b>02 — Lengkapi data</b><p>Masukkan OVR, rank, resource, dan kondisi posisi.</p></div>
+          <div><b>03 — Analisis</b><p>Estimator memberi skor squad, kelebihan, kekurangan, dan kisaran nilai.</p></div>
+        </div>
+        <p class="note">Versi ini menggunakan estimator lokal di browser. Ia belum melakukan OCR/AI vision otomatis dari foto. Jika nanti ingin pembacaan screenshot otomatis, bagian analyzer dapat dihubungkan ke API vision/OCR.</p>
+      </div>
+    </section>
+  </main>
+  <footer>FCM Account Valuator • Demo estimator • Bukan penentuan harga resmi.</footer>
+  <script src="app.js"></script>
+</body>
+</html>
